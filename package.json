@@ -1,0 +1,12 @@
+{
+  "author": "Matthew Rodrigues <matt@capaz.dev>",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "discord.js": "^14.15.2",
+    "dotenv": "^16.4.5"
+  },
+  "license": "MIT",
+  "main": "main.js",
+  "name": "warmanebot",
+  "version": "1.0.0"
+}
