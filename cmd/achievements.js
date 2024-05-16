@@ -23,6 +23,8 @@ async function hAchievCmd(msg) {
     return;
   }
 
+  const realm = args[2] ? args[2] : "icecrown";
+
   const b = Array.from({ length: 8 }, () => ["❌", "❌"]);
   let error = false,
     notFound = false;
@@ -36,7 +38,7 @@ async function hAchievCmd(msg) {
         "The character you are looking for does not exist or does not meet the minimum required level."
       );
     await fetch(
-      `https://armory.warmane.com/character/${args[1]}/icecrown/achievements`,
+      `https://armory.warmane.com/character/${args[1]}/${realm}/achievements`,
       {
         headers: {
           "content-type": "application/x-www-form-urlencoded",
