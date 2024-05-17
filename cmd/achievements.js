@@ -1,4 +1,5 @@
 const cheerio = require("cheerio");
+const argsHandler = require("../global");
 
 // Category, Achievements[Normal, Heroic]
 const catgAch = [
@@ -16,14 +17,7 @@ const catgAch = [
 ];
 
 async function hAchievCmd(msg) {
-  const args = msg.content.split(" ");
-
-  if (args.length == 1) {
-    msg.reply("Please provide a character name");
-    return;
-  }
-
-  const realm = args[2] ? args[2] : "icecrown";
+  const { args, realm } = argsHandler(msg.content);
 
   const b = Array.from({ length: 8 }, () => ["❌", "❌"]);
   let error = false,
@@ -70,7 +64,7 @@ TOC    |  ${b[4][0]}   ${b[4][1]}   ${b[5][0]}   ${b[5][1]}
 ULDUAR |  ${b[2][0]}   ${b[2][1]}   ${b[3][0]}   ${b[3][1]}`;
 
   msg.channel.send(
-    `**${args[1]}'s achievements**:` + "```fix\n" + table + "```"
+    `**${args[1]}**'s Achievements:` + "```fix\n" + table + "```"
   );
 }
 
