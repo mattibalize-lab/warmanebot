@@ -9,6 +9,7 @@ const client = new Client({
   ],
 });
 const hAchievCmd = require("./cmd/achievements");
+const hSummaryCmd = require("./cmd/summary");
 require("dotenv").config();
 
 client.on("ready", () => {
@@ -21,6 +22,8 @@ client.on("messageCreate", async (msg) => {
 
   if (content.startsWith("!achi") || content.startsWith("!achievements")) {
     hAchievCmd(msg);
+  } else if (content.startsWith("!summary")) {
+    hSummaryCmd(msg);
   }
 });
 

@@ -1,5 +1,5 @@
+const { argsHandler, baseURL } = require("../global");
 const cheerio = require("cheerio");
-const argsHandler = require("../global");
 
 // Category, Achievements[Normal, Heroic]
 const catgAch = [
@@ -31,16 +31,13 @@ async function hAchievCmd(msg) {
       return msg.reply(
         "The character you are looking for does not exist or does not meet the minimum required level."
       );
-    await fetch(
-      `https://armory.warmane.com/character/${args[1]}/${realm}/achievements`,
-      {
-        headers: {
-          "content-type": "application/x-www-form-urlencoded",
-        },
-        body: `category=${catgAch[i][0]}`,
-        method: "POST",
-      }
-    )
+    await fetch(`${baseURL}/character/${args[1]}/${realm}/achievements`, {
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+      },
+      body: `category=${catgAch[i][0]}`,
+      method: "POST",
+    })
       .then((res) => res.json())
       .then((json) => {
         const $ = cheerio.load(json.content);
