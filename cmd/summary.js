@@ -5,12 +5,15 @@ const { EmbedBuilder } = require("discord.js");
 async function hSummaryCmd(msg) {
   const { args, realm } = argsHandler(msg.content);
 
-  let sSkills = [];
+  let killsToday,
+    sSkills = [];
 
   await fetch(`${baseURL}/character/${args[1]}/${realm}/profile`)
     .then((res) => res.text())
     .then((html) => {
       const $ = cheerio.load(html);
+
+      killsToday = $(".pvpbasic").find(".stub").eq(1).text().match(/\d+/)[0];
 
       const secondaryEl = $(".profskills").eq(1);
       secondaryEl.find(".stub").map((_, el) => {
@@ -23,8 +26,6 @@ async function hSummaryCmd(msg) {
   await fetch(`${baseURL}/api/character/${args[1]}/${realm}/`)
     .then((res) => res.json())
     .then((json) => {
-      //console.log(json);
-
       // faction emoji
       const fE = () => {
         if (json.faction === "Alliance")
@@ -101,7 +102,7 @@ async function hSummaryCmd(msg) {
             name: "Player vs. Player",
             value: `${fE()} Total Kills **${
               json.honorablekills
-            }**\n${fE()} Kills Today **-**`,
+            }**\n${fE()} Kills Today **${killsToday}**`,
             inline: true,
           },
 
