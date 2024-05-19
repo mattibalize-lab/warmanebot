@@ -193,7 +193,9 @@ async function hSummaryCmd(msg) {
       let description = `[**${json.name}**](${baseURL}/character/${args[1]}/${realm}/profile)`;
 
       if (json.guild)
-        description += ` \\<[**${json.guild}**](${baseURL}/guild/${json.guild}/${realm})>`;
+        description += ` \\<[**${
+          json.guild
+        }**](${baseURL}/guild/${json.guild.replaceAll(" ", "+")}/${realm})>`;
 
       description += `\nLevel ${json.level} ${json.race}, ${json.class} ${
         cE[json.class]
