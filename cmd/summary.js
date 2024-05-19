@@ -33,9 +33,72 @@ async function hSummaryCmd(msg) {
         else return "<:horde:1240726837374615595>";
       };
 
+      const tE = {
+        "Death Knight": {
+          Blood: "<:spell_deathknight_bloodpresence:1241533988800041030>",
+          Frost: "<:spell_deathknight_frostpresence:1241533990230294641>",
+          Unholy: "<:spell_deathknight_unholypresence:1241533991572734023>",
+        },
+
+        Druid: {
+          Balance: "<:spell_nature_starfall:1241534029409292359>",
+          "Feral Combat": "<:ability_racial_bearform:1241534026695577651>",
+          Restoration: "<:spell_nature_healingtouch:1241534027878371360>",
+        },
+
+        Hunter: {
+          "Beast Mastery": "<:ability_hunter_beasttaming:1241534056894562324>",
+          Marksman: "<:ability_marksmanship:1241534059520458833>",
+          Survival: "<:ability_hunter_swiftstrike:1241534058052325480>",
+        },
+
+        Mage: {
+          Arcane: "<:spell_holy_magicalsentry:1241534095809445970>",
+          Fire: "<:spell_fire_firebolt02:1241534093049593867>",
+          Frost: "<:spell_frost_frostbolt02:1241534094635176038>",
+        },
+
+        Paladin: {
+          Holy: "<:spell_holy_holybolt:1241534128470622248> ",
+          Protection: "<:spell_holy_devotionaura:1241534127086506015>",
+          Retribution: "<:spell_holy_auraoflight:1241534125438144663>",
+        },
+
+        Priest: {
+          Discipline: " <:spell_holy_wordfortitude:1241534155465031691>",
+          Holy: "<:spell_holy_guardianspirit:1241534153904885832>",
+          Shadow: "<:spell_shadow_shadowwordpain:1241534157025316944>",
+        },
+
+        Rogue: {
+          Assassination: "<:ability_rogue_eviscerate:1241534184292487278>",
+          Combat: "<:ability_backstab:1241534182899843072>",
+          Subtlety: "<:ability_stealth:1241534186314141716>",
+        },
+
+        Shaman: {
+          Elemental: "<:spell_nature_lightning:1241534212629074063>",
+          Enhancement: "<:spell_nature_lightningshield:1241534214256459896>",
+          Restoration: "<:spell_nature_magicimmunity:1241534215217086537>",
+        },
+
+        Warlock: {
+          Affliction: "<:spell_shadow_deathcoil:1241534461951348787>",
+          Demonology: "<:spell_shadow_metamorphosis:1241534463263903896>",
+          Destruction: "<:spell_shadow_rainoffire:1241534464513937598>",
+        },
+
+        Warrior: {
+          Arms: "<:ability_rogue_eviscerate:1241534184292487278>",
+          Fury: "<:ability_warrior_innerrage:1241534494981488670>",
+          Protection: "<:inv_shield_06:1241534496277270690>",
+        },
+      };
       const talents = json.talents
         .map((t) => {
-          return `❔ ${t.tree} **${t.points ? t.points.join(" / ") : "?"}**`;
+          return `${tE[json.class][t.tree]} ${t.tree} **${
+            t.points ? t.points.join(" / ") : "?"
+          }**`;
         })
         .join("\n");
 
