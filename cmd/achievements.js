@@ -17,7 +17,8 @@ const catgAch = [
 ];
 
 async function hAchievCmd(msg) {
-  const { args, realm } = argsHandler(msg.content);
+  const { args, realm } = argsHandler(msg);
+  if (!args[1] || !realm) return;
 
   const b = Array.from({ length: 8 }, () => ["❌", "❌"]);
   let error = false,

@@ -1,12 +1,18 @@
-const argsHandler = (msgContent) => {
-  const args = msgContent.split(" ");
+const argsHandler = (msg) => {
+  const args = msg.content.split(" ");
+  if (args.length == 1) msg.reply("Please provide a character name");
 
-  if (args.length == 1) {
-    msg.reply("Please provide a character name");
-    return;
-  }
+  const realms = ["Blackrock", "Frostwolf", "Icecrown", "Lordaeron", "Onyxia"];
+  let realm = undefined;
 
-  const realm = args[2] ? args[2] : "icecrown";
+  if (args[2]) {
+    args[2] = args[2].charAt(0).toUpperCase() + args[2].slice(1).toLowerCase();
+    if (!realms.includes(args[2]))
+      msg.reply(
+        "Please provide a valid realm.\nValid realms: `Blackrock`, `Frostwolf`, `Icecrown`, `Lordaeron`, `Onyxia`"
+      );
+    else realm = args[2];
+  } else realm = "Icecrown";
 
   return { args, realm };
 };

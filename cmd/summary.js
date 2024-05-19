@@ -3,7 +3,8 @@ const cheerio = require("cheerio");
 const { EmbedBuilder } = require("discord.js");
 
 async function hSummaryCmd(msg) {
-  const { args, realm } = argsHandler(msg.content);
+  const { args, realm } = argsHandler(msg);
+  if (!args[1] || !realm) return;
 
   let killsToday,
     sSkills = [];
@@ -183,11 +184,12 @@ async function hSummaryCmd(msg) {
           }
         );
 
-      if (json.level == 80)
+      if (json.level > 69)
         embed.addFields(
           { name: "\u200B", value: "\u200B" },
           { name: "Missing Enchants", value: "-", inline: true },
-          { name: "Missing Gems", value: "-", inline: true }
+          { name: "Missing Gems", value: "-", inline: true },
+          { name: "PvP Gear", value: "-", inline: true }
         );
 
       let description = `[**${json.name}**](${baseURL}/character/${args[1]}/${realm}/profile)`;
