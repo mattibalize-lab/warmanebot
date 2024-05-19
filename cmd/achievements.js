@@ -53,12 +53,14 @@ async function hAchievCmd(msg) {
       });
   }
 
-  let table = `Raid   | 10NM 10HC 25NM 25HC
-${"-".repeat(28)}
-ICC    |  ${b[6][0]}   ${b[6][1]}   ${b[7][0]}   ${b[7][1]}
-RS     |  ${b[0][0]}   ${b[0][1]}   ${b[1][0]}   ${b[1][1]}
-TOC    |  ${b[4][0]}   ${b[4][1]}   ${b[5][0]}   ${b[5][1]}
-ULDUAR |  ${b[2][0]}   ${b[2][1]}   ${b[3][0]}   ${b[3][1]}`;
+  let table = `+${"-".repeat(8)}+${"-".repeat(21)}+
+| Raid   | 10NM 10HC 25NM 25HC |
++${"-".repeat(8)}+${"-".repeat(21)}+
+| ICC    |  ${b[6][0]}   ${b[6][1]}   ${b[7][0]}   ${b[7][1]}  |
+| RS     |  ${b[0][0]}   ${b[0][1]}   ${b[1][0]}   ${b[1][1]}  |
+| TOC    |  ${b[4][0]}   ${b[4][1]}   ${b[5][0]}   ${b[5][1]}  |
+| ULDUAR |  ${b[2][0]}   ${b[2][1]}   ${b[3][0]}   ${b[3][1]}  |
++${"-".repeat(8)}+${"-".repeat(21)}+`;
 
   msg.channel.send(
     `**${args[1]}**'s Achievements:` + "```fix\n" + table + "```"
