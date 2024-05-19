@@ -16,7 +16,7 @@ const catgAch = [
   [15042, [4608, 4637]], // FotLK 25
 ];
 
-async function hAchievCmd(msg) {
+async function hAchievCmd(msg, include) {
   const { args, realm } = argsHandler(msg);
   if (!args[1] || !realm) return;
 
@@ -63,9 +63,11 @@ async function hAchievCmd(msg) {
 | ULDUAR |  ${b[2][0]}   ${b[2][1]}   ${b[3][0]}   ${b[3][1]}  |
 +${"-".repeat(8)}+${"-".repeat(21)}+`;
 
-  msg.channel.send(
-    `**${args[1]}**'s Achievements:` + "```fix\n" + table + "```"
-  );
+  if (include) return "```fix\n" + table + "```";
+  else
+    msg.channel.send(
+      `**${args[1]}**'s Achievements:` + "```fix\n" + table + "```"
+    );
 }
 
 module.exports = hAchievCmd;

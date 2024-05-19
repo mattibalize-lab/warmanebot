@@ -1,6 +1,7 @@
 const { argsHandler, baseURL, cE } = require("../global");
 const cheerio = require("cheerio");
 const { EmbedBuilder } = require("discord.js");
+const hAchievCmd = require("./achievements");
 
 async function hSummaryCmd(msg) {
   const { args, realm } = argsHandler(msg);
@@ -26,7 +27,7 @@ async function hSummaryCmd(msg) {
 
   await fetch(`${baseURL}/api/character/${args[1]}/${realm}/`)
     .then((res) => res.json())
-    .then((json) => {
+    .then(async (json) => {
       // faction emoji
       const fE = () => {
         if (json.faction === "Alliance")
@@ -144,19 +145,10 @@ async function hSummaryCmd(msg) {
         )
         .addFields(
           {
-            name: "Achievement Points",
-            value: `**${json.achievementpoints}**`,
-            inline: true,
-          },
-          {
             name: "Status",
             value: json.online ? "**🟢 Online**" : "**🔴 Offline**",
             inline: true,
           },
-          { name: "Gear Score", value: `**----**`, inline: true },
-
-          { name: "\u200B", value: "\u200B" },
-
           {
             name: "Specializations",
             value: talents ? talents : "..?",
@@ -170,8 +162,7 @@ async function hSummaryCmd(msg) {
             inline: true,
           },
 
-          { name: "\u200B", value: "\u200B" },
-
+          { name: "Gear Score", value: `**----**`, inline: true },
           {
             name: "Professions",
             value: professions ? professions : "None",
@@ -184,14 +175,18 @@ async function hSummaryCmd(msg) {
           }
         );
 
-      if (json.level > 69)
+      if (json.level > 69) {
         embed.addFields(
-          { name: "\u200B", value: "\u200B" },
           { name: "Missing Enchants", value: "-", inline: true },
           { name: "Missing Gems", value: "-", inline: true },
           { name: "PvP Gear", value: "-", inline: true }
         );
-
+        if (realm == "Lordaeron" || realm == "Icecrown")
+          embed.addFields({
+            name: "Raids",
+            value: await hAchievCmd(msg, 1),
+          });
+      }
       let description = `[**${json.name}**](${baseURL}/character/${args[1]}/${realm}/profile)`;
 
       if (json.guild)
