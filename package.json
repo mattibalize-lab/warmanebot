@@ -1,6 +1,7 @@
 {
   "author": "Matthew Rodrigues <matt@capaz.dev>",
   "dependencies": {
+    "better-sqlite3": "^10.0.0",
     "cheerio": "^1.0.0-rc.12",
     "discord.js": "^14.15.2",
     "dotenv": "^16.4.5"
