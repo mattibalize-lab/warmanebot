@@ -98,9 +98,10 @@ async function hSummaryCmd(msg) {
       };
       const talents = json.talents
         .map((t) => {
-          return `${tE[json.class][t.tree]} ${t.tree} **${
-            t.points ? t.points.join(" / ") : "?"
-          }**`;
+          if (t.points && t.points.join(" / ") !== "0 / 0 / 0")
+            return `${tE[json.class][t.tree]} ${t.tree} **${t.points.join(
+              " / "
+            )}**`;
         })
         .join("\n");
 
@@ -178,14 +179,16 @@ async function hSummaryCmd(msg) {
       if (json.level > 69) {
         embed.addFields(
           { name: "Missing Enchants", value: "-", inline: true },
-          { name: "Missing Gems", value: "-", inline: true },
-          { name: "PvP Gear", value: "-", inline: true }
+          { name: "Missing Gems", value: "-", inline: true }
         );
         if (realm == "Lordaeron" || realm == "Icecrown")
-          embed.addFields({
-            name: "Raids",
-            value: await hAchievCmd(msg, 1),
-          });
+          embed.addFields(
+            { name: "PvP Gear", value: "-", inline: true },
+            {
+              name: "Raids",
+              value: await hAchievCmd(msg, 1),
+            }
+          );
       }
       let description = `[**${json.name}**](${baseURL}/character/${args[1]}/${realm}/profile)`;
 
