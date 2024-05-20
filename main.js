@@ -18,13 +18,19 @@ client.on("ready", () => {
 
 client.on("messageCreate", async (msg) => {
   if (msg.author.bot) return;
+
+  if (msg.author.lastCommand && msg.author.lastCommand + 1500 > Date.now())
+    return msg.reply(
+      "Please wait a few seconds before sending another command."
+    );
+
   const content = msg.content.toLowerCase();
 
-  if (content.startsWith("!achi") || content.startsWith("!achievements")) {
+  if (content.startsWith("!achi") || content.startsWith("!achievements"))
     hAchievCmd(msg);
-  } else if (content.startsWith("!summary")) {
-    hSummaryCmd(msg);
-  }
+  else if (content.startsWith("!summary")) hSummaryCmd(msg);
+
+  msg.author.lastCommand = Date.now();
 });
 
 client.login(process.env.BOT_TOKEN);
