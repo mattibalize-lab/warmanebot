@@ -9,8 +9,15 @@ const client = new Client({
   ],
 });
 const hAchievCmd = require("./cmd/achievements");
+const hListCmd = require("./cmd/list");
+const hGuildCmd = require("./cmd/guild");
 const hSummaryCmd = require("./cmd/summary");
+
 require("dotenv").config();
+
+const Database = require("better-sqlite3");
+const db = new Database("./database.db");
+console.log("Database connected.");
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -26,11 +33,26 @@ client.on("messageCreate", async (msg) => {
 
   const content = msg.content.toLowerCase();
 
-  if (content.startsWith("!achi") || content.startsWith("!achievements"))
-    hAchievCmd(msg);
-  else if (content.startsWith("!summary")) hSummaryCmd(msg);
+  if (content.startsWith("!")) {
+    if (content.startsWith("!achi") || content.startsWith("!achievements"))
+      hAchievCmd(msg);
+    else if (
+      content.startsWith("!alts") ||
+      content.startsWith("!characters") ||
+      content.startsWith("!list")
+    )
+      hListCmd(msg, db);
+    else if (content.startsWith("!ginfo") || content.startsWith("!guild"))
+      hGuildCmd(msg);
+    else if (content.startsWith("!summary")) {
+      console.log("I did this?");
+      hSummaryCmd(msg, db);
+    }
 
-  msg.author.lastCommand = Date.now();
+    msg.author.lastCommand = Date.now();
+  }
 });
 
 client.login(process.env.BOT_TOKEN);
+
+module.exports = db;

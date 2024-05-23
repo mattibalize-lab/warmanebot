@@ -3,17 +3,22 @@ const cheerio = require("cheerio");
 const { EmbedBuilder } = require("discord.js");
 const hAchievCmd = require("./achievements");
 
-async function hSummaryCmd(msg) {
+async function hSummaryCmd(msg, db) {
   const { args, realm } = argsHandler(msg);
   if (!args[1] || !realm) return;
 
-  let killsToday,
+  let gear = [],
+    killsToday,
     sSkills = [];
 
   await fetch(`${baseURL}/character/${args[1]}/${realm}/profile`)
     .then((res) => res.text())
     .then((html) => {
       const $ = cheerio.load(html);
+
+      $(".item-slot div a").map((_, el) => {
+        gear.push($(el).attr("rel"));
+      });
 
       killsToday = $(".pvpbasic").find(".stub").eq(1).text().match(/\d+/)[0];
 
@@ -24,6 +29,40 @@ async function hSummaryCmd(msg) {
         sSkills.push([m[1].trim(), m[2]]);
       });
     });
+
+  for (let i = 0; i < gear.length; i++) {
+    /*const a = db.prepare("SELECT * FROM items WHERE id = ?").get(gear[i]);
+    if (!a) {
+      console.log("Item #" + gear[i] + " not found in database.");
+      await fetch(
+        `https://wotlk.cavernoftime.com/item=51265&power=true&ench=3832&gems=3536:3532`
+      )
+        .then((res) => res.text())
+        .then((html) => {
+          const $ = cheerio.load(html);
+
+          const item = {
+            id: gear[i],
+            name: $(".item-name").text(),
+            icon: $(".icon").attr("rel"),
+            slot: $(".item-slot").text().trim(),
+            level: $(".item-level").text().trim(),
+            quality: $(".item-quality").text().trim(),
+          };
+
+          db.prepare(
+            "INSERT INTO items (id, name, icon, slot, level, quality) VALUES (?, ?, ?, ?, ?, ?)"
+          ).run(
+            item.id,
+            item.name,
+            item.icon,
+            item.slot,
+            item.level,
+            item.quality
+          );
+        });
+    }*/
+  }
 
   await fetch(`${baseURL}/api/character/${args[1]}/${realm}/`)
     .then((res) => res.json())
