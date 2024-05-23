@@ -45,7 +45,6 @@ client.on("messageCreate", async (msg) => {
     else if (content.startsWith("!ginfo") || content.startsWith("!guild"))
       hGuildCmd(msg);
     else if (content.startsWith("!summary")) {
-      console.log("I did this?");
       hSummaryCmd(msg, db);
     }
 

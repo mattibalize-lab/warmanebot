@@ -1,10 +1,7 @@
 const { baseURL } = require("../global");
-const cheerio = require("cheerio");
 
 async function hGuildCmd(msg) {
   const args = msg.content.split(" ");
-
-  console.log(args[1]);
 
   await fetch(`${baseURL}/api/guild/${args[1]}/icecrown/`)
     .then((res) => res.json())
